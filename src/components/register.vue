@@ -6,9 +6,9 @@
         <input type="text" v-model="email" placeholder="example@email.com">
     </div>
 	<div class="form__actions">
-		<input class="form__actions__submit button button5" type="button" value="Send Email Verification Code">
+		<input class="form__actions__submit button button5" type="button" value="Send Email Verification Code" v-on:click="sendEmailVerificationCode">
 		<input class="form__actions__submit button button5" type="button" value="I have my Code" v-if="!showFullForm" v-on:click="hasCode">
-		<input class="" type="text" v-model="code" placeholder="000000" v-if="showFullForm">
+		<input class="" type="text" v-model="emailVerificationCode" placeholder="000000" v-if="showFullForm">
 	</div>
     <div class="form__field" v-if="showFullForm">
         <label>Username</label>
@@ -48,6 +48,7 @@ export default {
     data: function() {
         return {
 			email: '',
+			emailVerificationCode: '',
 			showFullForm: false,
 			name: '',
 			password: '',
@@ -67,7 +68,7 @@ export default {
 	methods: {
 		submit: function() {
 			this.messages = [];
-			var body = 'email=' + this.email + '&password=' + this.password + '&name=' + this.name;
+			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password + '&name=' + this.name;
 
 			var vueContext = this;
 			var xhttp = new XMLHttpRequest();
@@ -84,7 +85,7 @@ export default {
 						vueContext.messages.push({ type: 'error', message: responseObj.message });
 					}
 
-					vueContext.$emit('closeAuth');
+					// vueContext.$emit('closeAuth');
 				}
 			};
 			xhttp.open("POST", "/api/v1/site/auth/register", true);
@@ -100,8 +101,31 @@ export default {
 		},
 		cleanup: function() {
 			this.email = '';
+			this.emailVerificationCode = '';
 			this.password = '';
 			this.name = '';
+		},
+		sendEmailVerificationCode: function() {
+			var body = 'email=' + this.email;
+
+			var vueContext = this;
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					var responseObj = JSON.parse(this.responseText);
+
+					if (this.status == 200) {
+						vueContext.messages.push({ type: 'success', message: responseObj.message });
+					} else {
+						vueContext.messages.push({ type: 'error', message: responseObj.message });
+					}
+
+					// vueContext.$emit('closeAuth');
+				}
+			};
+			xhttp.open("POST", "/api/v1/site/auth/sendEmailVerificationCode", true);
+			xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhttp.send(body);
 		}
 	}
 }

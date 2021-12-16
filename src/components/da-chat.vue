@@ -143,8 +143,6 @@ export default {
 ===============================
 **/
 .chat {
-    margin: 10px;
-    
     border: 1px solid black;
     height: 300px;
     display: grid;

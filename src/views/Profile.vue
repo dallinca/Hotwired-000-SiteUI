@@ -1,5 +1,5 @@
 <template>
-<div class="profile">
+<div class="profile component-padding">
     <div v-if="!hasToken">
         <h1>Please Login</h1>
     </div>

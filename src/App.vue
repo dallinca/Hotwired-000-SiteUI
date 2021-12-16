@@ -1,7 +1,7 @@
 <template>
   <div class="site__wrap">
     <site-ribbon />
-    <router-view />
+    <div class="page__wrap"><router-view /></div>
   </div>
 </template>
 
@@ -27,5 +27,8 @@ export default {
 <style>
 .site__wrap {
   min-width: 320px;
+}
+.page__wrap {
+  padding: 0px;
 }
 </style>

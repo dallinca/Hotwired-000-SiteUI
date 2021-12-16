@@ -1,5 +1,5 @@
 <template>
-<div class="about">
+<div class="about component-padding">
   <h1>About Us</h1>
 
   <p>This is a site that is being constructed by Dallin Andersen. It is a practice in learning new technologies.</p>

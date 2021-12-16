@@ -1,5 +1,5 @@
 <template>
-<div class="home">
+<div class="home component-padding">
   <h1>Welcome Home!</h1>
 
   <da-chat

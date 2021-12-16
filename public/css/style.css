@@ -36,7 +36,17 @@ img {
     max-height: 100%;
     max-width: 100%;
 }
+.component-padding {
+    padding: 10px;
+}
 
+/* FONTS */
+* {
+    font-family: 'Chakra Petch', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+}
 
 :root {
     --icon-color: invert(0%) sepia(100%) saturate(0%) hue-rotate(208deg) brightness(101%) contrast(105%); /* #000000 */
@@ -152,7 +162,6 @@ img {
     box-sizing: border-box;
     overflow: hidden;
     border: none;
-    font-family: Verdana, Geneva, sans-serif;
     padding: 0 10px;
 
     /* hovering */

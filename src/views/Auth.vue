@@ -1,5 +1,5 @@
 <template>
-<div class="auth">
+<div class="auth component-padding">
 	<div class="auth__loggedIn" v-if="hasToken"><h2>You are Currently logged in</h2></div>
 
     <div class="auth__tabs" v-if="!hasToken">
