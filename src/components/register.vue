@@ -5,19 +5,24 @@
         <label>Email</label>
         <input type="text" v-model="email" placeholder="example@email.com">
     </div>
-    <div class="form__field">
+	<div class="form__actions">
+		<input class="form__actions__submit button button5" type="button" value="Send Email Verification Code">
+		<input class="form__actions__submit button button5" type="button" value="I have my Code" v-if="!showFullForm" v-on:click="hasCode">
+		<input class="" type="text" v-model="code" placeholder="000000" v-if="showFullForm">
+	</div>
+    <div class="form__field" v-if="showFullForm">
         <label>Username</label>
         <input type="text" v-model="name" placeholder="uniqueUserName_199">
     </div>
-    <div class="form__field">
+    <div class="form__field" v-if="showFullForm">
         <label>Password</label>
         <input v-bind:type="passwordFieldType" v-model="password" placeholder="super secret password" >
     </div>
-    <div class="form__field form__field--checkbox">
+    <div class="form__field form__field--checkbox" v-if="showFullForm">
         <input type="checkbox" v-model="showPassword">
         <label for="checkbox">Show Password</label>
     </div>
-    <div class="form__actions">
+    <div class="form__actions" v-if="showFullForm">
         <input class="form__actions__submit button button5" type="button" value="Submit" v-on:click="submit">
         <input class="form__actions__cancel button button5" type="button" value="Cancel" v-on:click="cancel">
     </div>
@@ -43,6 +48,7 @@ export default {
     data: function() {
         return {
 			email: '',
+			showFullForm: false,
 			name: '',
 			password: '',
 			showPassword: false,
@@ -88,6 +94,9 @@ export default {
 		cancel: function() {
 			this.$emit('cancel');
 			this.cleanup();
+		},
+		hasCode: function() {
+			this.showFullForm = !this.showFullForm;
 		},
 		cleanup: function() {
 			this.email = '';
