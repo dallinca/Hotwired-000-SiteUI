@@ -9,10 +9,10 @@
 			<nav class="dropdown-menu dropdown-menu--mobile site-nav"
 			v-bind:class="{ tapped: siteNavTapped }"
 			v-on:click="toggleTapped($event.currentTarget, 'siteNav')">
-				<a class="icon icon1" href="#"
+				<div class="icon dropdown-menu__button"
 				v-bind:class="{ tapped: siteNavTapped }">
 					<img src="/images/menu-ham.svg">
-				</a>
+				</div>
 				<div class="dropdown-menu__items">
 					<router-link v-for="item in siteNavItems" v-bind:key="item" class="dropdown-menu__item" v-bind:to="item.link">{{ item.text }}</router-link>
 				</div>
@@ -21,10 +21,10 @@
 			<nav class="dropdown-menu dropdown-menu--mobile2 user-nav"
 			v-bind:class="{ tapped: userNavTapped }"
 			v-on:click="toggleTapped($event.currentTarget, 'userNav')">
-				<a class="icon icon1" href="#"
+				<div class="icon dropdown-menu__button"
 				v-bind:class="{ tapped: userNavTapped }">
 					<img v-bind:src="ribbonInfo.userIcon">
-				</a>
+				</div>
 				<div class="dropdown-menu__items">
 					<router-link v-for="(item, name) in userNavItems" v-bind:key="item"
 					class="dropdown-menu__item"
@@ -88,10 +88,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .site-ribbon--mobile {
+	display: grid;
+	grid-template-columns: 164px auto;
 	width: 100%;
+	height: 56px;
 }
 
 .site-ribbon--mobile .logo {
+	width: 164px;
 	padding: 10px;
 	display: block;
 }

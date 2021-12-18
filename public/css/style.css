@@ -17,14 +17,42 @@ Some guidelines on media query sizes
 ===============================
 **/
 
+:root {
+    /* Font size normalizing */
+    font-size: 62.5%;
+
+    /* Main Branding Colors */
+    --brand-color-main: #CB0000;
+    --brand-color-main-light: #e58080;
+    --brand-color-secondary: #29292A;
+    --brand-color-secondary-light: #949495;
+    --brand-color-secondary-lighter: #d4d4d4;
+    --brand-color-contrast: #FFFBFC;
+
+    --brand-color-glyph: var(--brand-color-secondary);
+    --brand-color-canvas: var(--brand-color-contrast);
+    --brand-color-accent: var(--brand-color-secondary-light);
+    --brand-color-accent-light: var(--brand-color-secondary-lighter);
+
+    --icon-color-canvas: var(--brand-color-canvas);
+    --icon-color-canvas-hover: var(--brand-color-glyph);
+    --icon-color-glyph: var(--brand-color-glyph);
+    --icon-color-glyph-hover: var(--brand-color-canvas);
+    --icon-color-border: var(--brand-color-glyph);
+    --icon-color-border-hover: var(--brand-color-canvas);
+
+}
+
 body {
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: var(--brand-color-canvas);
+    font-size: 1.6rem;
 }
 a {
     text-decoration: none;
-    color: #000;
+    color: var(--brand-color-glyph);
 }
 nav, div, a {
     box-sizing: border-box;
@@ -39,25 +67,27 @@ img {
 .component-padding {
     padding: 10px;
 }
+input {
+    height: 2em;
+}
 
 /* FONTS */
 * {
+    /* FONTS */
     font-family: 'Chakra Petch', sans-serif;
+    /* COLORS */
+    color: var(--brand-color-glyph);
+    border-color: var(--brand-color-glyph);
+    /* Styling */
+    border-width: 1px;
+}
+*:focus {
+    outline: none;    
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
 }
 
-:root {
-    --icon-color: invert(0%) sepia(100%) saturate(0%) hue-rotate(208deg) brightness(101%) contrast(105%); /* #000000 */
-    --icon-color-hover: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%); /* #FFFFFF */
-    --icon-bg-color: #CCCCCC;
-    /*--icon-bg-color-hover: #444444;*/
-    --icon-bg-color-hover: #000000;
-    --icon-border-color: #000000;
-    --icon-border-color-hover: #000000;
-    /* https://codepen.io/sosuke/pen/Pjoqqp */
-}
 
 /**
 ===============================
@@ -65,16 +95,11 @@ h1, h2, h3, h4, h5, h6 {
 ===============================
 **/
 
-.sample-icons .icon {
-    float: left;
-    margin: 2px;
-}
-
 .icon {
     position: relative;
     line-height: 0;
-    width: 32px;
-    height: 32px;
+    width: 3.2rem;
+    height: 3.2rem;
     max-width: 100%;
     max-height: 100%;
     display: grid;
@@ -85,42 +110,59 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
 
     /* hovering */
-    transition: background .5s, transform .5s, border-radius .5s, border .5s;
+    transition: background .5s, transform .5s, border .5s, color .5s, height .5s, width, .5s;
 }
 .no-touch .icon:hover, .icon.tapped {
     cursor: pointer;
 }
-.icon img {
-    width: 80%;
-    filter: var(--icon-color);
-    max-width: 100%;
-    max-height: 100%;
+.icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.icon--ribbon {
+    height: 100%;
+    width: 100%;
+    background-color: var(--brand-color-canvas);
+    border-color: var(--brand-color-glyph);
+    color: var(--brand-color-glyph);
+    border-left: 1px solid;
+}
+.icon--ribbon svg {
+    fill: var(--brand-color-glyph);
+}
+.icon--ribbon:focus, .icon--ribbon:hover, .icon--ribbon.tapped:focus, .icon--ribbon.tapped:hover {
+    background-color: var(--brand-color-secondary-lighter);
+    border-color: var(--brand-color-glyph);
+    color: var(--brand-color-canvas);
+}
+.icon--ribbon:focus svg, .icon--ribbon:hover svg, .icon--ribbon.tapped:focus svg, .icon--ribbon.tapped:hover svg {
+
+}
+.icon--ribbon.tapped {
+    background-color: var(--brand-color-glyph);
+    border-color: var(--brand-color-glyph);
+    color: var(--brand-color-canvas);
+}
+.icon--ribbon.tapped svg {
+    fill: var(--brand-color-canvas);
 }
 
 .icon1 {
-    width: 100%;
-    background: #FFF;
+    background: var(--brand-color-accent-light);
+    border-color: var(--brand-color-glyph);
+    color: var(--brand-color-glyph);
+}
+.icon1 svg {
+    fill: var(--brand-color-glyph);
 }
 .no-touch .icon1:hover, .icon1.tapped {
-    background: #000;
+    background: var(--brand-color-accent);
+    border-color: var(--brand-color-accent);
+    color: var(--brand-color-canvas);
 }
-.no-touch .icon1:hover img, .icon1.tapped img {
-    filter: var(--icon-color-hover);
-}
-
-
-
-
-.icon5 {
-    border: 1px solid var(--icon-border-color);
-    background: #FFF;
-}
-.no-touch .icon5:hover, .icon5.tapped {
-    border: 1px solid var(--icon-border-color);
-    background: #000;
-}
-.no-touch .icon5:hover img, .icon5.tapped img {
-    filter: var(--icon-color-hover);
+.no-touch .icon1:hover svg, .icon1.tapped svg {
+    fill: var(--brand-color-canvas);
 }
 
 /* ICON -- Hover */
@@ -152,7 +194,7 @@ h1, h2, h3, h4, h5, h6 {
 ===============================
 **/
 
-.button {
+button, [type="button"], [type="reset"], [type="submit"] {
     position: relative;
     line-height: 0;
     height: 32px;
@@ -161,32 +203,40 @@ h1, h2, h3, h4, h5, h6 {
     justify-items: center;
     box-sizing: border-box;
     overflow: hidden;
-    border: none;
     padding: 0 10px;
+    font-weight: bold;
 
     /* hovering */
-    transition: background .5s, transform .5s, border-radius .5s, border .5s, padding .5s, width .5s, height .5s;
+    transition: background .5s, transform .5s, border-radius .5s, border .5s, padding .5s, width .5s, height .5s, color .5s;
+
+    background: var(--brand-color-accent-light);
+    border: 1px solid var(--brand-color-glyph);
+    color: var(--brand-color-glyph)
 }
-.button:hover {
+button, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover {
     cursor: pointer;
+
+    background: var(--brand-color-accent);
+    border: 1px solid var(--brand-color-accent);
+    color: var(--brand-color-canvas);
 }
 
 .button1 {
-    background: var(--icon-bg-color);
+    background: var(--icon-color-canvas);
 }
 .button1:hover {
-    background: var(--icon-bg-color-hover);
-    color: #FFF;
+    background: var(--icon-color-canvas-hover);
+    color: var(--icon-color-glyph-hover);
 }
 
 
 .button5 {
-    border: 1px solid var(--icon-border-color);
+    border: 1px solid var(--icon-color-border);
 }
 .button5:hover {
-    background: var(--icon-bg-color-hover);
-    border: 1px solid var(--icon-border-color);
-    color: #FFF;
+    background: var(--icon-color-canvas-hover);
+    border: 1px solid var(--icon-color-border-hover);
+    color: var(--icon-color-glyph-hover);
 }
 
 
@@ -258,30 +308,34 @@ h1, h2, h3, h4, h5, h6 {
 ===== DROPDOWN MENU
 ===============================
 **/
-.dropdown-menu {
+/*.dropdown-menu {
     position: relative;
+    cursor: pointer;
+}
+.dropdown-menu__button {
+    margin: auto;
 }
 .no-touch .dropdown-menu:hover > .dropdown-menu__items, .dropdown-menu.tapped > .dropdown-menu__items {
     display: grid;
     position: absolute;
-    background: #CCC;
+    background: var(--icon-color-canvas-hover);
 }
 .dropdown-menu > .dropdown-menu__items {
     display: none;
 }
 .dropdown-menu__item:first-child {
-    border-top: 1px solid #000;
+    border-top: 1px solid var(--icon-color-border);
 }
 .dropdown-menu__item {
     padding: 10px;
-    border-bottom: 1px solid #000;
-    color: #000;
+    border-bottom: 1px solid var(--icon-color-border);
+    color: var(--icon-color-glyph);
     transition: background .5s;
     min-width: 100px;
 }
 .no-touch .dropdown-menu__item:hover, .dropdown-menu__item.tapped {
-    background: #000;
-    color: #FFF;
+    background: var(--icon-color-canvas-hover);
+    color: var(--icon-color-glyph-hover);
 }
 
 .dropdown-menu--right {}
@@ -299,7 +353,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 200%;
     left: -100%;
 }
-
+*/
 
 /**
 ===============================
@@ -313,6 +367,7 @@ h1, h2, h3, h4, h5, h6 {
 ===== INLINE MENU
 ===============================
 **/
+/*
 .inline-menu {}
 .inline-menu__items {
     display: flex;
@@ -330,10 +385,10 @@ h1, h2, h3, h4, h5, h6 {
     transition: background .5s;
 }
 .no-touch .inline-menu__item:hover, .inline-menu__item.tapped {
-    background: #000;
-    color: #FFF;
+    background: var(--icon-color-canvas-hover);
+    color: var(--icon-color-glyph-hover);
 }
-
+*/
 /**
 ===============================
 ===== OTHER

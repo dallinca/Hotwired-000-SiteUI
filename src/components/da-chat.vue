@@ -143,13 +143,13 @@ export default {
 ===============================
 **/
 .chat {
-    border: 1px solid black;
+    border: 1px solid;
     height: 300px;
     display: grid;
     grid-template-rows: calc(100% - 50px) 50px;
 }
 .chat__messages-wrap {
-    border: 1px solid black;
+    border: 1px solid;
     overflow: auto;
 }
 .chat__messages {}
@@ -165,7 +165,7 @@ export default {
 .chat__compose__send {
     display: grid;
     cursor: pointer;
-    border: 1px solid black;
+    border: 1px solid;
     transition: all .5s ease;
 }
 .chat__compose__send:hover {
@@ -176,9 +176,9 @@ export default {
     height: 100%;
     resize: none;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 1px solid;
 }
 .chat__compose-text:hover {
-    border: 1px solid black;
+    border: 1px solid;
 }
 </style>
