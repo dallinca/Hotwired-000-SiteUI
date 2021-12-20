@@ -131,12 +131,12 @@ h1, h2, h3, h4, h5, h6 {
 .icon--ribbon svg {
     fill: var(--brand-color-glyph);
 }
-.icon--ribbon:focus, .icon--ribbon:hover, .icon--ribbon.tapped:focus, .icon--ribbon.tapped:hover {
+.icon--ribbon:focus, .icon--ribbon:hover {
     background-color: var(--brand-color-secondary-lighter);
     border-color: var(--brand-color-glyph);
     color: var(--brand-color-canvas);
 }
-.icon--ribbon:focus svg, .icon--ribbon:hover svg, .icon--ribbon.tapped:focus svg, .icon--ribbon.tapped:hover svg {
+.icon--ribbon:focus svg, .icon--ribbon:hover svg {
 
 }
 .icon--ribbon.tapped {
@@ -146,6 +146,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .icon--ribbon.tapped svg {
     fill: var(--brand-color-canvas);
+}
+.icon--ribbon.tapped:focus, .icon--ribbon.tapped:hover {}
+.icon--ribbon.tapped:focus svg, .icon--ribbon.tapped:hover svg {
+    fill: var(--brand-color-secondary-light);
 }
 
 .icon1 {

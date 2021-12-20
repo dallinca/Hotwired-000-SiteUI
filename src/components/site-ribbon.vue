@@ -155,10 +155,7 @@ export default {
 
 		},
         tabTest: function(event, nav) {
-            console.log(event);
-            console.log(event.srcElement.nextElementSibling)
-            // srcElement.nextElementSibling
-            if (event.srcElement.nextElementSibling) {
+            if ((event.shiftKey && event.srcElement.previousElementSibling) || (!event.shiftKey && event.srcElement.nextElementSibling)) {
                 return;
             }
 
