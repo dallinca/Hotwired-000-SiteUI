@@ -1,14 +1,16 @@
 <template>
-<div class="profile component-padding">
-    <div v-if="!hasToken">
-        <h1>Please Login</h1>
-    </div>
-    <div v-if="hasToken">
-        <h1>Welcome {{ userName }}!</h1>
+<section>
+	<div class="profile component-padding">
+		<div v-if="!hasToken">
+			<h1>Please Login</h1>
+		</div>
+		<div v-if="hasToken">
+			<h1>Welcome {{ userName }}!</h1>
 
-        <span>Email:</span><span>{{ userEmail }}</span>
-    </div>
-</div>
+			<span>Email:</span><span>{{ userEmail }}</span>
+		</div>
+	</div>
+</section>
 </template>
 
 <script>

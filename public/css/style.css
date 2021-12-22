@@ -65,11 +65,22 @@ img {
     max-width: 100%;
 }
 .component-padding {
-    padding: 10px;
+    padding: 12px;
 }
 input {
     height: 2em;
 }
+section {
+    width: 100%;
+    margin: auto;
+
+    transition: width .5s;
+}
+@media only screen and (min-width: 768px) { section { width: 768px; } }
+@media only screen and (min-width: 900px) { section { width: 900px; } }
+@media only screen and (min-width: 1024px) { section { width: 1024px; } }
+@media only screen and (min-width: 1200px) { section { width: 1200px; } }
+
 
 /* FONTS */
 * {
@@ -80,9 +91,14 @@ input {
     border-color: var(--brand-color-glyph);
     /* Styling */
     border-width: 1px;
+    /* Formatting */
+    box-sizing: border-box;
 }
 *:focus {
     outline: none;    
+}
+input:hover {
+    cursor: pointer;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
@@ -93,6 +109,11 @@ h1, h2, h3, h4, h5, h6 {
 ===============================
 ===== ICONS
 ===============================
+4 States to every icon
+1) Base State
+2) Focused or Hovered
+3) Tapped (Currently active ie. dropdown, selection, etc)
+4) (Focused or Hovered) AND Tapped
 **/
 
 .icon {
@@ -112,14 +133,22 @@ h1, h2, h3, h4, h5, h6 {
     /* hovering */
     transition: background .5s, transform .5s, border .5s, color .5s, height .5s, width, .5s;
 }
-.no-touch .icon:hover, .icon.tapped {
-    cursor: pointer;
-}
 .icon svg {
     width: 100%;
     height: 100%;
-}
 
+    transition: fill .5s;
+}
+.icon:focus, .icon.hover {
+    cursor: pointer;
+}
+.icon:focus, .icon.hover svg {}
+.icon.tapped {}
+.icon.tapped svg {}
+.icon.tapped:focus, .icon.tapped:hover {}
+.icon.tapped:focus svg, .icon.tapped:hover svg {}
+
+/* icon-ribbon */
 .icon--ribbon {
     height: 100%;
     width: 100%;
@@ -151,7 +180,7 @@ h1, h2, h3, h4, h5, h6 {
 .icon--ribbon.tapped:focus svg, .icon--ribbon.tapped:hover svg {
     fill: var(--brand-color-secondary-light);
 }
-
+/* icon-1 */
 .icon1 {
     background: var(--brand-color-accent-light);
     border-color: var(--brand-color-glyph);
@@ -201,14 +230,13 @@ h1, h2, h3, h4, h5, h6 {
 button, [type="button"], [type="reset"], [type="submit"] {
     position: relative;
     line-height: 0;
-    height: 32px;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    box-sizing: border-box;
+    height: 2em;
     overflow: hidden;
     padding: 0 10px;
     font-weight: bold;
+    display: grid;
+    align-items: center;
+    justify-items: center;
 
     /* hovering */
     transition: background .5s, transform .5s, border-radius .5s, border .5s, padding .5s, width .5s, height .5s, color .5s;
@@ -217,21 +245,27 @@ button, [type="button"], [type="reset"], [type="submit"] {
     border: 1px solid var(--brand-color-glyph);
     color: var(--brand-color-glyph)
 }
-button, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover {
+button:hover, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover, button:focus, [type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
     cursor: pointer;
 
     background: var(--brand-color-accent);
     border: 1px solid var(--brand-color-accent);
     color: var(--brand-color-canvas);
 }
-
-.button1 {
-    background: var(--icon-color-canvas);
+/* button-1 */
+.button--1 {
+    color: var(--brand-color-glyph);
 }
-.button1:hover {
-    background: var(--icon-color-canvas-hover);
+.button--1 svg {
+    fill: var(--brand-color-glyph);
+}
+.button--1:focus, .button--1:hover {
     color: var(--icon-color-glyph-hover);
 }
+.button--1:focus svg, .button--1:hover svg {
+    color: var(--icon-color-glyph-hover);
+}
+
 
 
 .button5 {
@@ -241,6 +275,46 @@ button, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover {
     background: var(--icon-color-canvas-hover);
     border: 1px solid var(--icon-color-border-hover);
     color: var(--icon-color-glyph-hover);
+}
+
+/**
+===============================
+===== INPUT - TEXT
+===============================
+**/
+[type="text"], [type="password"] {
+    height: 2em;
+
+    transition: color .5s, fill .5s, background .5s;
+
+    color: var(--brand-color-glyph);
+    background: var(--brand-color-accent-lighter);
+}
+[type="text"] svg, [type="password"] svg {
+    fill: var(--brand-color-glyph);
+}
+[type="text"]:focus, [type="text"]:hover, [type="password"]:focus, [type="password"]:hover {
+    background: var(--brand-color-accent-light);
+}
+[type="text"]:focus svg, [type="text"]:hover svg, [type="tepasswordxt"]:focus svg, [type="password"]:hover svg {
+
+}
+
+/**
+===============================
+===== INPUT - CHECKBOX
+===============================
+**/
+[type="checkbox"] {
+    height: 1em;
+    width: 1em;
+    margin-right: .5rem;
+    transition: box-shadow .5s, height .2s, width .2s;
+}
+[type="checkbox"]:focus, [type="checkbox"]:hover {
+    box-shadow: 0px 0px 3px var(--brand-color-glyph);
+    height: 1.2em;
+    width: 1.2em;
 }
 
 

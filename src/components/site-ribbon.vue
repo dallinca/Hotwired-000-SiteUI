@@ -1,5 +1,6 @@
 <template>
-    <div class="site-ribbon__wrap">
+<div class="site-ribbon">
+    <section class="site-ribbon__wrap">
         <router-link class="image-wrap logo" to="/">
             <img src="/images/Logo_Hotwired_NoPadding.png">
         </router-link>
@@ -59,7 +60,9 @@
         v-bind:parent-site-nav-items-action="siteNavItemsAction"
         v-bind:parent-user-nav-items-action="userNavItemsAction">	
         </site-ribbon-mobile>-->
-    </div>
+    
+    </section>
+</div>
 </template>
 
 <script>
@@ -174,11 +177,17 @@ body {
     padding-top: 56px;
 }
 
-.site-ribbon__wrap {
+.site-ribbon {
     width: 100%;
     position: fixed;
     top: 0;
     height: 56px;
+    box-shadow: 0px 0px 5px var(--brand-color-glyph);
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+.site-ribbon__wrap {
     display: grid;
     grid-template-columns: 164px auto 56px 56px;
     grid-template-rows: 56px;
@@ -186,7 +195,6 @@ body {
     align-items: center;
 
     background-color: var(--brand-color-canvas);
-    box-shadow: 0px 0px 5px var(--brand-color-glyph);
 
     z-index: 9999;
 }
@@ -197,13 +205,12 @@ body {
 }
 
 .site-ribbon__wrap .logo {
-    /*width: 144px;
-    height: 32px;*/
     width: 100%;
     height: 100%;
     display: grid;
     align-items: center;
     justify-items: center;
+    transition: background .5s;
 }
 .site-ribbon__wrap .logo:focus, .site-ribbon__wrap .logo:hover {
     background-color: var(--brand-color-secondary-lighter);
@@ -255,63 +262,4 @@ body {
     }
 }
 
-/*.site-ribbon {
-    display: none;
-}
-
-@media only screen and (min-width: 360px) {
-    body {
-        padding-top: 52px;
-    }
-
-    .site-ribbon {
-        width: 100%;
-        height: 32px;
-        position: fixed;
-        top: 0px;
-        box-shadow: 0px 0px 8px;
-
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-    }
-    .site-ribbon__logo {
-        height: 32px;
-        width: 110px;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-        margin-left: 10px;
-    }
-    .site-ribbon__navs {
-        height: 32px;
-        display: flex;
-    }
-    .site-nav--dropdown {
-        width: 32px;
-        height: 32px;
-        border-left: 1px solid;
-        border-top: 1px solid;
-        border-bottom: 1px solid;
-    }
-    .site-nav--inline {
-        display: none;
-    }
-    .user-nav {
-        width: 32px;
-        height: 32px;
-        border: 1px solid;
-    }
-}
-
-@media only screen and (min-width: 600px) {
-    .site-nav--dropdown {
-        border: none;
-        display: none;
-    }
-    .site-nav--inline {
-        display: block;
-    }
-}*/
 </style>

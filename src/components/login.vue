@@ -10,12 +10,12 @@
         <input v-bind:type="passwordFieldType" v-model="password" placeholder="super secret password" >
     </div>
     <div class="form__field form__field--checkbox">
-        <input type="checkbox" v-model="showPassword">
-        <label for="checkbox">Show password</label>
+        <input id="showPassword" type="checkbox" v-model="showPassword">
+        <label for="showPassword">Show password</label>
     </div>
     <div class="form__actions">
-        <input class="form__actions__submit button button5" type="button" value="Submit" v-on:click="submit">
-        <input class="form__actions__cancel button button5" type="button" value="Cancel" v-on:click="cancel">
+        <input class="form__actions__submit" type="button" value="Submit" v-on:click="submit">
+        <input class="form__actions__cancel" type="button" value="Cancel" v-on:click="cancel">
     </div>
     <div class="form__messages" v-if="messages.length">
         <div v-for="message in messages" v-bind:key="message"

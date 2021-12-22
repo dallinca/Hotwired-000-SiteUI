@@ -1,17 +1,19 @@
 <template>
-<div class="auth component-padding">
-	<div class="auth__loggedIn" v-if="hasToken"><h2>You are Currently logged in</h2></div>
+<section>
+    <div class="auth component-padding">
+        <div class="auth__loggedIn" v-if="hasToken"><h2>You are Currently logged in</h2></div>
 
-    <div class="auth__tabs" v-if="!hasToken">
-        <input class="button button5" v-if="displayLogin" type="button" value="Go to Registration" v-on:click="authDisplay('register')">
-        <input class="button button5" v-if="displayRegister" type="button" value="Go to Login" v-on:click="authDisplay('login')">
-    </div>
+        <div class="auth__tabs" v-if="!hasToken">
+            <input v-if="displayLogin" type="button" value="Go to Registration" v-on:click="authDisplay('register')">
+            <input v-if="displayRegister" type="button" value="Go to Login" v-on:click="authDisplay('login')">
+        </div>
 
-    <div class="auth__form" v-if="!hasToken">
-        <register v-if="displayRegister" v-on:cancel="cancelRegister"></register>
-        <login v-if="displayLogin" v-on:cancel="cancelLogin"></login>
+        <div class="auth__form" v-if="!hasToken">
+            <register v-if="displayRegister" v-on:cancel="cancelRegister"></register>
+            <login v-if="displayLogin" v-on:cancel="cancelLogin"></login>
+        </div>
     </div>
-</div>
+</section>
 </template>
 
 <script>

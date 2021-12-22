@@ -6,8 +6,8 @@
         <input type="text" v-model="email" placeholder="example@email.com">
     </div>
 	<div class="form__actions">
-		<input class="form__actions__submit button button5" type="button" value="Send Email Verification Code" v-on:click="sendEmailVerificationCode">
-		<input class="form__actions__submit button button5" type="button" value="I have my Code" v-if="!showFullForm" v-on:click="hasCode">
+		<input class="form__actions__submit" type="button" value="Send Code" v-on:click="sendEmailVerificationCode">
+		<input class="form__actions__submit" type="button" value="I have my Code" v-if="!showFullForm" v-on:click="hasCode">
 		<input class="" type="text" v-model="emailVerificationCode" placeholder="000000" v-if="showFullForm">
 	</div>
     <div class="form__field" v-if="showFullForm">
@@ -23,8 +23,8 @@
         <label for="checkbox">Show Password</label>
     </div>
     <div class="form__actions" v-if="showFullForm">
-        <input class="form__actions__submit button button5" type="button" value="Submit" v-on:click="submit">
-        <input class="form__actions__cancel button button5" type="button" value="Cancel" v-on:click="cancel">
+        <input class="form__actions__submit" type="button" value="Submit" v-on:click="submit">
+        <input class="form__actions__cancel" type="button" value="Cancel" v-on:click="cancel">
     </div>
     <div class="form__messages" v-if="messages.length">
         <div v-for="message in messages" v-bind:key="message"
