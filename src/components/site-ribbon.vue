@@ -48,18 +48,6 @@
                 v-on:click="userNavItemsAction(name)">{{ item.text }}</router-link>
             </div>
         </nav>
-
-        <!--<site-ribbon-desktop
-        v-bind:parent-ribbon-info="ribbonInfo"
-        v-bind:parent-site-nav-items-action="siteNavItemsAction"
-        v-bind:parent-user-nav-items-action="userNavItemsAction">	
-        </site-ribbon-desktop>
-
-        <site-ribbon-mobile
-        v-bind:parent-ribbon-info="ribbonInfo"
-        v-bind:parent-site-nav-items-action="siteNavItemsAction"
-        v-bind:parent-user-nav-items-action="userNavItemsAction">	
-        </site-ribbon-mobile>-->
     
     </section>
 </div>
@@ -74,13 +62,14 @@ export default {
         return {
             siteNavItems: {
                 about: { text: "About", link: "/About", tapped: false },
-                contact: { text: "Contact Us", link: "/Contact", tapped: false, lastItem: true }
+                contact: { text: "Contact Us", link: "/Contact", tapped: false }
             },
             userNavItems: {
-                login: { text: "Login", link: "/Auth", tapped: false, lastItem: true}
+                login: { text: "Login", link: "/Login", tapped: false},
+                register: { text: "Register", link: "/Register", tapped: false},
+                forgotPassword: { text: "Forgot Password", link: "/ForgotPassword", tapped: false }
             },
             userLoggedIn: false,
-            userIcon: "/images/avatar.svg",
             
             siteNavTapped: false,
             userNavTapped: false,
@@ -105,26 +94,28 @@ export default {
         tokenStatusChange: function(hasToken) {
             if (hasToken) {
                 this.userLoggedIn = true;
-                // Update Menu Icon
-                this.userIcon = "/images/avatar.svg"
 
                 // Remove items
                 delete this.userNavItems["login"];
+                delete this.userNavItems["register"];
+                delete this.userNavItems["forgotPassword"];
 
                 // Add items
                 this.userNavItems["logout"] = { text: "Logout", link: "#"};
-                this.userNavItems["profile"] = { text: "Profile", link: "/profile"};
+                this.userNavItems["profile"] = { text: "Profile", link: "/Profile"};
+                this.userNavItems["resetPassword"] = { text: "Reset Password", link: "/ResetPassword"};
             } else  {
                 this.userLoggedIn = false;
-                // Update Menu Icon
-                this.userIcon = "/images/avatar.svg" // GEAR
 
                 // Remove items
                 delete this.userNavItems["logout"];
                 delete this.userNavItems["profile"];
+                delete this.userNavItems["resetPassword"];
 
                 // Add items
-                this.userNavItems["login"] = { text: "Login", link: "/Auth"};
+                this.userNavItems["login"] = { text: "Login", link: "/Login"};
+                this.userNavItems["register"] = { text: "Register", link: "/Register"};
+                this.userNavItems["forgotPassword"] = { text: "Forgot Password", link: "/ForgotPassword"};
             }
         },
         userNavItemsAction: function(key) {

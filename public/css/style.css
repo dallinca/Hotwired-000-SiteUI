@@ -330,7 +330,7 @@ button:hover, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover
     grid-template-rows: auto;
     grid-template-columns: auto;
     justify-items: center;
-    grid-row-gap: 5px;
+    grid-row-gap: 6px;
 }
 .form__title {
 
@@ -346,8 +346,20 @@ button:hover, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover
 .form__actions {
     width: 100%;
     display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 12px;  
+}
+.form__field--two {
+    width: 100%;
+    display: grid;
     grid-template-columns: auto auto;
-    grid-column-gap: 10px;  
+    grid-column-gap: 12px;  
+}
+.form__field--three {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 12px;  
 }
 .form__actions__submit {
 

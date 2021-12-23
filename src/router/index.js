@@ -31,9 +31,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue')
   },
   {
-    path: '/Auth',
-    name: 'Auth',
-    component: () => import(/* webpackChunkName: "auth" */ '@/views/Auth.vue')
+    path: '/Login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "auth" */ '@/views/visitorAuth/Login.vue')
+  },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: () => import(/* webpackChunkName: "auth" */ '@/views/visitorAuth/Register.vue')
+  },
+  {
+    path: '/ForgotPassword',
+    name: 'ForgotPassword',
+    component: () => import(/* webpackChunkName: "auth" */ '@/views/visitorAuth/ForgotPassword.vue')
+  },
+  {
+    path: '/ResetPassword',
+    name: 'ResetPassword',
+    component: () => import(/* webpackChunkName: "auth" */ '@/views/userAuth/ResetPassword.vue')
   }
 ]
 

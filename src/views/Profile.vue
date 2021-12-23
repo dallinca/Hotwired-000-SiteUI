@@ -49,6 +49,7 @@ export default {
 			if (!token) {
 				this.userName = '';
 				this.userEmail = '';
+				this.redirectToLogin();
 				return;
 			}
 
@@ -76,6 +77,9 @@ export default {
 			xhttp.open("GET", "/api/v1/site/auth/me", true);
 			xhttp.setRequestHeader('x-access-token', token);
 			xhttp.send();
+		},
+		redirectToLogin: function() {
+			this.$router.push({ path: 'Login'})
 		},
 		getUserInfo: function(/*target, tapGroup*/) {
 
