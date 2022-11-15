@@ -1,4 +1,6 @@
-# hotwired
+# Hotwired SiteUI
+
+Built to connect to Hotwired SiteAPI
 
 ## Project setup
 ```
