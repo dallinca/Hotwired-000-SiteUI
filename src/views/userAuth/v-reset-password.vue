@@ -1,7 +1,7 @@
 <template>
 <section class="component-padding">
 <div class="form">
-    <h1 class="form__title">Register</h1>
+    <h1 class="form__title">Reset Password</h1>
     <div class="form__field">
         <label>Email</label>
         <input type="text" v-model="email" placeholder="example@email.com">
@@ -12,11 +12,7 @@
 		<input class="" type="text" v-model="emailVerificationCode" placeholder="000000" v-if="showFullForm">
 	</div>
     <div class="form__field" v-if="showFullForm">
-        <label>Username</label>
-        <input type="text" v-model="name" placeholder="uniqueUserName_199">
-    </div>
-    <div class="form__field" v-if="showFullForm">
-        <label>Password</label>
+        <label>New Password</label>
         <input v-bind:type="passwordFieldType" v-model="password" placeholder="super secret password" >
     </div>
     <div class="form__field form__field--checkbox" v-if="showFullForm">
@@ -24,7 +20,7 @@
         <label for="checkbox">Show Password</label>
     </div>
     <div class="form__field--two" v-if="showFullForm">
-        <input class="form__actions__submit" type="button" value="Submit" v-on:click="submit">
+        <input class="form__actions__submit" type="button" value="Reset Password" v-on:click="submit">
         <input class="form__actions__cancel" type="button" value="Cancel" v-on:click="cancel">
     </div>
     <div class="form__messages" v-if="messages.length">
@@ -43,16 +39,15 @@
 </template>
 
 <script>
-import { UPDATE_AUTH_TOKEN, CLEAR_AUTH_TOKEN } from '@/action-types'
+//import { UPDATE_AUTH_TOKEN, CLEAR_AUTH_TOKEN } from '@/action-types'
 
 export default {
-    name: 'register',
+    name: 'v-reset-password',
     data: function() {
         return {
 			email: '',
 			emailVerificationCode: '',
 			showFullForm: false,
-			name: '',
 			password: '',
 			showPassword: false,
 			messages: []
@@ -65,12 +60,61 @@ export default {
 			} else {
 				return 'password';
 			}
+		},
+		hasToken() {
+			return this.$store.state.auth.hasToken;
 		}
 	},
+	watch: {
+		hasToken: function() {
+			this.updateUserInfo();
+		}
+	},
+	created: function() {
+		this.updateUserInfo();
+	},
 	methods: {
+		updateUserInfo: function() {
+			// Check if a token exists
+			var token = this.$store.getters.authToken;
+			if (!token) {
+				this.userName = '';
+				this.userEmail = '';
+				this.redirectToLogin();
+				return;
+			}
+
+			// If token exists attempt to get user information
+			/*var vueContext = this;
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					var responseObj = JSON.parse(this.responseText);
+
+					if (false == responseObj.auth) {
+						alert("Not authorized to view this page");
+					}
+
+					if (this.status == 200 && true == responseObj.auth) {
+						vueContext.userName = responseObj.user.name;
+						vueContext.userEmail = responseObj.user.email;
+					} else {
+						alert("Error: " + this.responseText);
+					}
+
+					console.log(responseObj);
+				}
+			};
+			xhttp.open("GET", "/api/v1/site/auth/me", true);
+			xhttp.setRequestHeader('x-access-token', token);
+			xhttp.send();*/
+		},
+		redirectToLogin: function() {
+			this.$router.push({ path: 'ForgotPassword'})
+		},
 		submit: function() {
 			this.messages = [];
-			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password + '&name=' + this.name;
+			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password;
 
 			var vueContext = this;
 			var xhttp = new XMLHttpRequest();
@@ -81,19 +125,19 @@ export default {
                     }
 					var responseObj = JSON.parse(this.responseText);
 
-					if (this.status == 200 && true == responseObj.auth) {
-						vueContext.$store.dispatch({ 'type': UPDATE_AUTH_TOKEN, 'newToken': responseObj.token});
+					if (this.status == 200) {
+						//vueContext.$store.dispatch({ 'type': UPDATE_AUTH_TOKEN, 'newToken': responseObj.token});
 						vueContext.messages.push({ type: 'success', message: responseObj.message });
 						vueContext.cleanup();
-						vueContext.$router.push({ path: 'Profile'})
 					} else {
-						vueContext.$store.dispatch(CLEAR_AUTH_TOKEN);
+						//vueContext.$store.dispatch(CLEAR_AUTH_TOKEN);
 						vueContext.messages.push({ type: 'error', message: responseObj.message });
 					}
 
+					// vueContext.$emit('closeAuth');
 				}
 			};
-			xhttp.open("POST", "/api/v1/site/auth/register", true);
+			xhttp.open("POST", "/api/v1/site/auth/resetPassword", true);
 			xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			xhttp.send(body);
 		},
@@ -108,7 +152,6 @@ export default {
 			this.email = '';
 			this.emailVerificationCode = '';
 			this.password = '';
-			this.name = '';
 		},
 		sendEmailVerificationCode: function() {
 			var body = 'email=' + this.email;

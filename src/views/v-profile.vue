@@ -15,7 +15,7 @@
 
 <script>
 export default {
-	name: 'da-profile',
+	name: 'v-profile',
 	data: function() {
 		return {
 			// data

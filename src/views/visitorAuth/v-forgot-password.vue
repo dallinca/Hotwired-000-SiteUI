@@ -1,23 +1,27 @@
 <template>
 <section class="component-padding">
 <div class="form">
-    <h1 class="form__title">Login</h1>
+    <h1 class="form__title">Forgot Password</h1>
     <div class="form__field">
         <label>Email</label>
         <input type="text" v-model="email" placeholder="example@email.com">
     </div>
-    <div class="form__field">
-        <label>Password</label>
+	<div class="form__field--two">
+		<input class="form__actions__submit" type="button" value="Send Code" v-on:click="sendEmailVerificationCode">
+		<input class="form__actions__submit" type="button" value="I have my Code" v-if="!showFullForm" v-on:click="hasCode">
+		<input class="" type="text" v-model="emailVerificationCode" placeholder="000000" v-if="showFullForm">
+	</div>
+    <div class="form__field" v-if="showFullForm">
+        <label>New Password</label>
         <input v-bind:type="passwordFieldType" v-model="password" placeholder="super secret password" >
     </div>
-    <div class="form__field form__field--checkbox">
-        <input id="showPassword" type="checkbox" v-model="showPassword">
-        <label for="showPassword">Show password</label>
+    <div class="form__field form__field--checkbox" v-if="showFullForm">
+        <input type="checkbox" v-model="showPassword">
+        <label for="checkbox">Show Password</label>
     </div>
-    <div class="form__field--three">
-        <input class="form__actions__submit" type="button" value="Submit" v-on:click="submit">
+    <div class="form__field--two" v-if="showFullForm">
+        <input class="form__actions__submit" type="button" value="Reset Password" v-on:click="submit">
         <input class="form__actions__cancel" type="button" value="Cancel" v-on:click="cancel">
-        <input class="form__actions__forgotPassword" type="button" value="Forgot Password" v-on:click="this.$router.push({ path: 'ForgotPassword'})">
     </div>
     <div class="form__messages" v-if="messages.length">
         <div v-for="message in messages" v-bind:key="message"
@@ -38,10 +42,12 @@
 import { UPDATE_AUTH_TOKEN, CLEAR_AUTH_TOKEN } from '@/action-types'
 
 export default {
-    name: 'login',
+    name: 'v-forgot-password',
     data: function() {
         return {
 			email: '',
+			emailVerificationCode: '',
+			showFullForm: false,
 			password: '',
 			showPassword: false,
 			messages: []
@@ -59,7 +65,7 @@ export default {
 	methods: {
 		submit: function() {
 			this.messages = [];
-			var body = 'email=' + this.email + '&password=' + this.password;
+			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password;
 
 			var vueContext = this;
 			var xhttp = new XMLHttpRequest();
@@ -70,19 +76,19 @@ export default {
                     }
 					var responseObj = JSON.parse(this.responseText);
 
-					if (this.status == 200 && true == responseObj.auth) {
+					if (this.status == 200) {
 						vueContext.$store.dispatch({ 'type': UPDATE_AUTH_TOKEN, 'newToken': responseObj.token});
 						vueContext.messages.push({ type: 'success', message: responseObj.message });
 						vueContext.cleanup();
-						vueContext.$router.push({ path: 'Profile'})
 					} else {
 						vueContext.$store.dispatch(CLEAR_AUTH_TOKEN);
 						vueContext.messages.push({ type: 'error', message: responseObj.message });
 					}
 
+					// vueContext.$emit('closeAuth');
 				}
 			};
-			xhttp.open("POST", "/api/v1/site/auth/login", true);
+			xhttp.open("POST", "/api/v1/site/auth/resetPassword", true);
 			xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			xhttp.send(body);
 		},
@@ -90,14 +96,38 @@ export default {
 			this.$emit('cancel');
 			this.cleanup();
 		},
-		forgotPassword: function() {
-			if (!this.email) {
-				this.messages.push({ type: 'error', message: 'Need to supply an email!' });
-			}
+		hasCode: function() {
+			this.showFullForm = !this.showFullForm;
 		},
 		cleanup: function() {
 			this.email = '';
+			this.emailVerificationCode = '';
 			this.password = '';
+		},
+		sendEmailVerificationCode: function() {
+			var body = 'email=' + this.email;
+
+			var vueContext = this;
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+                    if (this.status == 404) {
+						return vueContext.messages.push({ type: 'error', message: this.statusText });
+                    }
+					var responseObj = JSON.parse(this.responseText);
+
+					if (this.status == 200) {
+						vueContext.messages.push({ type: 'success', message: responseObj.message });
+					} else {
+						vueContext.messages.push({ type: 'error', message: responseObj.message });
+					}
+
+					// vueContext.$emit('closeAuth');
+				}
+			};
+			xhttp.open("POST", "/api/v1/site/auth/sendEmailVerificationCode", true);
+			xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhttp.send(body);
 		}
 	}
 }

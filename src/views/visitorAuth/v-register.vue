@@ -1,7 +1,7 @@
 <template>
 <section class="component-padding">
 <div class="form">
-    <h1 class="form__title">Forgot Password</h1>
+    <h1 class="form__title">Register</h1>
     <div class="form__field">
         <label>Email</label>
         <input type="text" v-model="email" placeholder="example@email.com">
@@ -12,7 +12,11 @@
 		<input class="" type="text" v-model="emailVerificationCode" placeholder="000000" v-if="showFullForm">
 	</div>
     <div class="form__field" v-if="showFullForm">
-        <label>New Password</label>
+        <label>Username</label>
+        <input type="text" v-model="name" placeholder="uniqueUserName_199">
+    </div>
+    <div class="form__field" v-if="showFullForm">
+        <label>Password</label>
         <input v-bind:type="passwordFieldType" v-model="password" placeholder="super secret password" >
     </div>
     <div class="form__field form__field--checkbox" v-if="showFullForm">
@@ -20,7 +24,7 @@
         <label for="checkbox">Show Password</label>
     </div>
     <div class="form__field--two" v-if="showFullForm">
-        <input class="form__actions__submit" type="button" value="Reset Password" v-on:click="submit">
+        <input class="form__actions__submit" type="button" value="Submit" v-on:click="submit">
         <input class="form__actions__cancel" type="button" value="Cancel" v-on:click="cancel">
     </div>
     <div class="form__messages" v-if="messages.length">
@@ -42,12 +46,13 @@
 import { UPDATE_AUTH_TOKEN, CLEAR_AUTH_TOKEN } from '@/action-types'
 
 export default {
-    name: 'forgotPassword',
+    name: 'v-register',
     data: function() {
         return {
 			email: '',
 			emailVerificationCode: '',
 			showFullForm: false,
+			name: '',
 			password: '',
 			showPassword: false,
 			messages: []
@@ -65,7 +70,7 @@ export default {
 	methods: {
 		submit: function() {
 			this.messages = [];
-			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password;
+			var body = 'email=' + this.email + '&emailVerificationCode=' + this.emailVerificationCode + '&password=' + this.password + '&name=' + this.name;
 
 			var vueContext = this;
 			var xhttp = new XMLHttpRequest();
@@ -76,19 +81,19 @@ export default {
                     }
 					var responseObj = JSON.parse(this.responseText);
 
-					if (this.status == 200) {
+					if (this.status == 200 && true == responseObj.auth) {
 						vueContext.$store.dispatch({ 'type': UPDATE_AUTH_TOKEN, 'newToken': responseObj.token});
 						vueContext.messages.push({ type: 'success', message: responseObj.message });
 						vueContext.cleanup();
+						vueContext.$router.push({ path: 'Profile'})
 					} else {
 						vueContext.$store.dispatch(CLEAR_AUTH_TOKEN);
 						vueContext.messages.push({ type: 'error', message: responseObj.message });
 					}
 
-					// vueContext.$emit('closeAuth');
 				}
 			};
-			xhttp.open("POST", "/api/v1/site/auth/resetPassword", true);
+			xhttp.open("POST", "/api/v1/site/auth/register", true);
 			xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			xhttp.send(body);
 		},
@@ -103,6 +108,7 @@ export default {
 			this.email = '';
 			this.emailVerificationCode = '';
 			this.password = '';
+			this.name = '';
 		},
 		sendEmailVerificationCode: function() {
 			var body = 'email=' + this.email;
